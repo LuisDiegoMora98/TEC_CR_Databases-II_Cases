@@ -1,4 +1,4 @@
-package com.example.case1.Controllers;
+package com.example.case1;
 
 import com.example.case1.Entities.sd_owners;
 import com.example.case1.Repositories.sd_ownersRepository;
