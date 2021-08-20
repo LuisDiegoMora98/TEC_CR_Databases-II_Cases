@@ -1,5 +1,7 @@
 # Case 1 - ORM Spring Java
 
+En la base de datos, el modelo posee las entidades "sd_owners" y "sd_problems". "Owners" tiene una relación 1 a N con "Problems", es decir un Owner puede tener varios PRoblems, peor un Problem solo puede tener un Owner.
+
 Para que la revisión del caso sea más fácil, por favor comience por el archivo Case1Application que se encuentra en el paquete com.example.case1. 
 A partir de ahí, el archivo indica en qué otros archivos se encuentra la implementación de los 3 elementos pedidos en el caso, no obstante, aquí se presenta una pequeña guía:
 
