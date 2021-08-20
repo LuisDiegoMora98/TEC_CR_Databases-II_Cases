@@ -8,7 +8,7 @@
         <property name="hibernate.connection.url">
             jdbc:sqlserver://localhost;databaseName=solutiondesigns;instanceName=MSSQLSERVER;</property>
         <property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.connection.password">Guayaboscr123</property>
+        <property name="hibernate.connection.password">pamela</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
 

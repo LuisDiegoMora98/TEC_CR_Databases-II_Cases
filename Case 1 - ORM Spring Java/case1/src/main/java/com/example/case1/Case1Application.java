@@ -16,7 +16,7 @@ import java.util.Set;
 
 @SpringBootApplication
 public class Case1Application {
-
+/*
 	@Bean
 	public CommandLineRunner demo(OwnerRepository repository) {
 		return (args) -> {
@@ -27,13 +27,13 @@ public class Case1Application {
 			//Here we saved Jack, but since already runned it, I'll comment it to keep testing
 			/*repository.save(new Owner("Jack", "Bauer", "jack@bauer.com", password, true,
 			                new java.sql.Date(System.currentTimeMillis())));*/
-			
+
 			// fetch all Owners
 			System.out.println("\n\nOwners found with findAll():\n");
 			for (Owner Owner : repository.findAll()) {
 				System.out.println(Owner.toString());
 			}
-
+/*
 			// fetch an individual Owner by ID
 			Owner Owner = repository.findByownerid(1L);
 			System.out.println("\nOwner found with findById(1L):\n\n");
@@ -77,11 +77,11 @@ public class Case1Application {
 						
 				tx.commit();
 
-				System.out.println("Jack ID=" + jack.getOwnerid());
-				System.out.println("Problem1 ID=" + problem1.getProblemid()
-				+ ", Foreign Key Jack ID=" + problem1.getOwner().getOwnerid());
-				System.out.println("item2 ID=" + problem2.getProblemid()
-				+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
+				//System.out.println("Jack ID=" + jack.getOwnerid());
+				//System.out.println("Problem1 ID=" + problem1.getProblemid()
+				//+ ", Foreign Key Jack ID=" + problem1.getOwner().getOwnerid());
+				//System.out.println("item2 ID=" + problem2.getProblemid()
+				//+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
 
 			} catch (Exception e) {
 				System.out.println("Error found: " + e.toString());
@@ -90,7 +90,7 @@ public class Case1Application {
 		};
   }
 
-
+*/
 	public static void main(String[] args) {
 		SpringApplication.run(Case1Application.class, args);
 	}
