@@ -11,9 +11,9 @@ import javax.persistence.Table;
 
 import java.sql.Date;
 
-@Entity
-@Table(name="sd_problems")
-public class sd_problems {
+@Entity(name = "sd_problems")
+@Table(name="sd_problems", schema = "dbo")
+public class Problem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +28,13 @@ public class sd_problems {
 
     @ManyToOne
     @JoinColumn(name="ownerid", nullable=false)
-    private sd_owners owner;
+    private Owner owner;
     
-    protected sd_problems() {}
+    protected Problem() {}
 
-    public sd_problems(String pTitle, String pDescription,
+    public Problem(String pTitle, String pDescription,
                         Date pCreationDate, Boolean pActive,
-                        Long pOwnerId, sd_owners pOwner){
+                        Long pOwnerId, Owner pOwner){
         this.title = pTitle;
         this.description = pDescription;
         this.creationdate = pCreationDate;
@@ -91,11 +91,11 @@ public class sd_problems {
         this.ownerid = pOwnerid;
     }
 
-    public sd_owners getOwner() {
+    public Owner getOwner() {
         return owner;
     }
 
-    public void setOwner(sd_owners pOwner) {
+    public void setOwner(Owner pOwner) {
         this.owner = pOwner;
     }
 
