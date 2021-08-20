@@ -4,6 +4,9 @@
     <list default="true" id="f9356c9e-c2e8-4814-8ec8-3081148d13db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Case1Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Case1Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Entities/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Entities/Owner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Entities/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/Entities/Problem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/utils/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/case1/src/main/java/com/example/case1/utils/HibernateUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/case1/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/case1/src/main/resources/hibernate.cfg.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

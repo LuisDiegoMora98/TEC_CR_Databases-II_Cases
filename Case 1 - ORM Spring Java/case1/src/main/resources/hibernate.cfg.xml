@@ -12,11 +12,12 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.show_sql">true</property>
 
-        <property name="hibernate.c3p0.min_size">5</property>
-        <property name="hibernate.c3p0.max_size">20</property>
-        <property name="hibernate.c3p0.timeout">300</property>
-        <property name="hibernate.c3p0.max_statements">50</property>
-        <property name="hibernate.c3p0.idle_test_period">3000</property>
+        <!--Configuration for the connection pool-->
+        <property name="hibernate.c3p0.min_size">5</property>               <!--Minimum amount of connections-->
+        <property name="hibernate.c3p0.max_size">20</property>              <!--Maximum amount of connections-->
+        <property name="hibernate.c3p0.timeout">300</property>              <!--Seconds before discarding an unused connection-->
+        <property name="hibernate.c3p0.max_statements">50</property>        <!--Number of prepared statements will be cached-->
+        <property name="hibernate.c3p0.idle_test_period">3000</property>    <!--Seconds before a connection is automatically validated-->
 
         <mapping class="com.example.case1.Entities.Owner"/>
         <mapping class="com.example.case1.Entities.Problem"/>

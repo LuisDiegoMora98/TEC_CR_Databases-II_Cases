@@ -12,7 +12,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
+@Entity     //relaciona la clase en java con la entidad en la base de datos
 @Table(name="sd_owners")
 public class Owner {
     
@@ -27,8 +27,8 @@ public class Owner {
     private Date creationdate;
 
 
-    @JsonManagedReference   //to handle two-way linkage between fields, this is for Parent role
-    @OneToMany(mappedBy="owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference           //para manejar la relacion entre entidades (para requests http)
+    @OneToMany(mappedBy="owner")    //indica que "owner" tiene una relación 1 a N con "problems"
     private Set<Problem> problems;
 
     protected Owner() {}

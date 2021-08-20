@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.sql.Date;
 
-@Entity(name = "sd_problems")
+@Entity(name = "sd_problems")     //relaciona la clase en java con la entidad en la base de datos
 @Table(name="sd_problems", schema = "dbo")
 public class Problem {
     
@@ -30,9 +30,9 @@ public class Problem {
     private Long ownerid;
 
 
-    @JsonBackReference  //Annotation used to indicate that associated property is part of two-way linkage between fields; and that its role is "child"
-    @ManyToOne
-    @JoinColumn(name="ownerid", nullable=false)
+    @JsonBackReference  //para manejar la relacion entre entidades (para requests http)
+    @ManyToOne          //indica que la relación de "problems" con "owners" es de N a 1
+    @JoinColumn(name="ownerid", nullable=false) //indica la columna que relaciona a "problems" con "owners"
     private Owner owner;
     
     protected Problem() {}

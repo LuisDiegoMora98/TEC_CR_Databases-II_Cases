@@ -47,8 +47,8 @@ public class Case1Application {
 			});
 
 			//Here we use one owner mapped to many problems.
-			Owner jack = repository.findByownerid(6L);
-
+			Owner jack = repository.findByownerid(6L);		//fletch an "owner" from DB
+			//creates two "problems" to map to "owner"
 			Problem problem1 = new Problem("Jack's trouble", "Once uppon a time there was a Jack...",
 													new java.sql.Date(System.currentTimeMillis()),
 													true, 6L, jack);
@@ -58,33 +58,41 @@ public class Case1Application {
 			Set<Problem> manyProblems = new HashSet<Problem>();
 			manyProblems.add(problem1);
 			manyProblems.add(problem2);
+
+			//Sets a group of "problems" to "owner"
+			//To see One-To-Many relation between tables "owners" & "problems" please refer to
+			//Owner and Problem classes, lines 31-32 and lines 34-36 respectively
 			jack.setProblems(manyProblems);
+
 
 			SessionFactory sessionFactory = null;
         	Session session = null;
         	Transaction tx = null;
 
 			//Here we are using a Transaction from Code!
+			//The transaction inserts into TWO tables: "problems" & "owners"
 			try {
-				sessionFactory = HibernateUtil.getSessionFactory();
-				session = sessionFactory.getCurrentSession();
+				sessionFactory = HibernateUtil.getSessionFactory();		//object that allows to create session objects
+				session = sessionFactory.getCurrentSession();			//provides session object which is in hibernate context and managed by hibernate internally
+				//Please refer to package com.example.case1.utils to see the connection pool management
 				System.out.println("\n\nSession created");
 						
-				tx = session.beginTransaction();
-				session.save(problem1);
+				tx = session.beginTransaction();		//indicates beginning of transaction
+				session.save(problem1);					//inserts into "problems" & "owners"
 				session.save(problem2);
 				session.save(jack);
-						
-				tx.commit();
 
-				//System.out.println("Jack ID=" + jack.getOwnerid());
-				//System.out.println("Problem1 ID=" + problem1.getProblemid()
-				//+ ", Foreign Key Jack ID=" + problem1.getOwner().getOwnerid());
-				//System.out.println("item2 ID=" + problem2.getProblemid()
-				//+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
+				//shows success message
+				System.out.println("Jack ID=" + jack.getOwnerid());
+				System.out.println("Problem1 ID=" + problem1.getProblemid()
+				+ ", Foreign Key Jack ID=" + problem1.getOwner().getOwnerid());
+				System.out.println("item2 ID=" + problem2.getProblemid()
+				+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
+
+				tx.commit();	//commits transaction
 
 			} catch (Exception e) {
-				tx.rollback();
+				tx.rollback();	//erase all modifications made to the DB during the transaction in case of error
 				System.out.println("Error found: " + e.toString());
 			}
 
