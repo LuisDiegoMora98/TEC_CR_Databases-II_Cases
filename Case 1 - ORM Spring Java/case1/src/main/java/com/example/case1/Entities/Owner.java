@@ -27,7 +27,7 @@ public class Owner {
     private Date creationdate;
 
 
-    @JsonManagedReference
+    @JsonManagedReference   //to handle two-way linkage between fields, this is for Parent role
     @OneToMany(mappedBy="owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Problem> problems;
 

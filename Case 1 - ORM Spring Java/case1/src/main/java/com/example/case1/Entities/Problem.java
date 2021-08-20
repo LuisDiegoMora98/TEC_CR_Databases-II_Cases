@@ -30,8 +30,8 @@ public class Problem {
     private Long ownerid;
 
 
-    @JsonBackReference
-    @ManyToOne//(fetch = FetchType.LAZY, optional = false)
+    @JsonBackReference  //Annotation used to indicate that associated property is part of two-way linkage between fields; and that its role is "child"
+    @ManyToOne
     @JoinColumn(name="ownerid", nullable=false)
     private Owner owner;
     
