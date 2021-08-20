@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.case1.Entities.*;
 import com.example.case1.Repositories.*;
+import java.util.List;
 
 
 @RestController
@@ -28,10 +29,10 @@ public class SDController {
     @GetMapping("owner/findByLastname/{lastname}")
     public ResponseEntity<?> findBylastname(@PathVariable String lastname){
         try {
-            return new ResponseEntity("Users with lastname "+lastname+":\n"+ownerRepository.findBylastname(lastname)., HttpStatus.CREATED);
-
+            return new ResponseEntity(ownerRepository.findBylastname(lastname), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity("Controller: "+e, HttpStatus.CREATED);
         }
     }
+
 }

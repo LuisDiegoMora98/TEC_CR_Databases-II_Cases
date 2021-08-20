@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.sql.Date;
 
@@ -26,7 +29,9 @@ public class Problem {
     @Column(name = "ownerid", insertable = false, updatable = false)
     private Long ownerid;
 
-    @ManyToOne
+
+    @JsonBackReference
+    @ManyToOne//(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="ownerid", nullable=false)
     private Owner owner;
     

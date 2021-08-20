@@ -6,8 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="sd_owners")
@@ -23,7 +26,9 @@ public class Owner {
     private Boolean enabled;
     private Date creationdate;
 
-    @OneToMany(mappedBy="owner")
+
+    @JsonManagedReference
+    @OneToMany(mappedBy="owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Problem> problems;
 
     protected Owner() {}
