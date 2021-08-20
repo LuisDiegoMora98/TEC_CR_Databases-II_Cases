@@ -4,9 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
+@Table(name="sd_owners")
 public class sd_owners {
     
     @Id
@@ -18,6 +22,9 @@ public class sd_owners {
     private byte[] password;
     private Boolean enabled;
     private Date creationdate;
+
+    @OneToMany(mappedBy="owner")
+    private Set<sd_problems> problems;
 
     protected sd_owners() {}
 
@@ -95,6 +102,14 @@ public class sd_owners {
 
     public void setCreationdate(Date pCreationdate) {
         this.creationdate = pCreationdate;
+    }
+
+    public Set<sd_problems> getProblems() {
+        return problems;
+    }
+
+    public void setProblems(Set<sd_problems> pProblems) {
+        this.problems = pProblems;
     }
 
 }
