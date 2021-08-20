@@ -16,7 +16,7 @@ import java.util.Set;
 
 @SpringBootApplication
 public class Case1Application {
-/*
+
 	@Bean
 	public CommandLineRunner demo(OwnerRepository repository) {
 		return (args) -> {
@@ -27,7 +27,7 @@ public class Case1Application {
 			//Here we saved Jack, but since already runned it, I'll comment it to keep testing
 			/*repository.save(new Owner("Jack", "Bauer", "jack@bauer.com", password, true,
 			                new java.sql.Date(System.currentTimeMillis())));*/
-/*
+
 			// fetch all Owners
 			System.out.println("\n\nOwners found with findAll():\n");
 			for (Owner Owner : repository.findAll()) {
@@ -84,13 +84,14 @@ public class Case1Application {
 				//+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
 
 			} catch (Exception e) {
+				tx.rollback();
 				System.out.println("Error found: " + e.toString());
 			}
 
 		};
   }
 
-*/
+
 	public static void main(String[] args) {
 		SpringApplication.run(Case1Application.class, args);
 	}
