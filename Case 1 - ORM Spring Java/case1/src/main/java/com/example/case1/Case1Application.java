@@ -72,7 +72,7 @@ public class Case1Application {
 			//Here we are using a Transaction from Code!
 			//The transaction inserts into TWO tables: "problems" & "owners"
 			try {
-				sessionFactory = HibernateUtil.getSessionFactory();		//object that allows to create session objects
+				sessionFactory = HibernateUtil.getSessionFactory();		//Singleton object that allows to create session objects
 				session = sessionFactory.getCurrentSession();			//provides session object which is in hibernate context and managed by hibernate internally
 				//Please refer to package com.example.case1.utils to see the connection pool management
 				System.out.println("\n\nSession created");
@@ -90,6 +90,7 @@ public class Case1Application {
 				+ ", Foreign Key Jack ID=" + problem2.getOwner().getOwnerid());
 
 				tx.commit();	//commits transaction
+				System.out.println("\n\nFinished\n\n");
 
 			} catch (Exception e) {
 				tx.rollback();	//erase all modifications made to the DB during the transaction in case of error
