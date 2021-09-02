@@ -1,0 +1,14 @@
+use pedidosYa;
+show collections;
+
+db.foods.save({"title": "Comida Asiatica","thumbnailURL": "URL","restaurants": [{"title": "Kimchis CR","thumbnailURL": "URL","menu": [{"name": "Pollo Bap Dulce / Ajo","description": "Rico Pollo Bap","price": 5800},{"name": "Kimbap","descrition": "Rico Kimbap de atun","price": 5800},{"name": "Bulgogi","description": "Rico Bulgogi","price": 6350}]},{"title": "Fritos","thumbnailURL" : "URL","menu": [{"name": "Jaetuk bokkum","description": "Rico Jaetuk","price": 5000},{"name": "Kimchi Chigae","description": "Rica sopa Kimchi","price": 6000},{"name": "Samkyeobsal","description": "Maravillosa BBQ coreana","price": 6000}]}]})
+db.foods.save({"title": "Comida Tica","thumbnailURL": "URL","restaurants" : [{"title": "Puertas del Sol","thumbnailURL": "URL","menu" : [{"name": "Casado","description": "Rico casado tico","price": 3500},{"name": "Sushi","description": "Rico sushi tico","price": 6500},{"name": "Bulgogi","description": "Rico Bulgogi","price": 8000}]}]})
+db.foods.save({"title": "Comida Coreana","thumbnailURL": "URL","restaurants" : [{"title": "Kimchis CR","thumbnailURL": "URL","menu" : [{"name": "Pollo Bap Dulce / Ajo","description": "Rico Pollo Bap","price": 5800},{"name": "Kimbap","description": "Rico kimbap de atun","price": 5800},{"name": "Bulgogi","description": "Rico Bulgogi","price": 6350}]}]})
+
+db.restaurants.save({"title": "Puertas del Sol","thumbnailURL": "URL","menu" : [{"name": "Casado","description": "Rico casado tico","price": 3500},{"name": "Sushi","description": "Rico sushi tico","price": 6500},{"name": "Bulgogi","description": "Rico Bulgogi","price": 8000}]})
+db.restaurants.save({"title": "Kimchis CR","thumbnailURL": "URL","menu" : [{"name": "Pollo Bap Dulce / Ajo","description": "Rico Pollo Bap","price": 5800},{"name": "Kimbap","description": "Rico kimbap de atun","price": 5800},{"name": "Bulgogi","description": "Rico Bulgogi","price": 6350}]})
+db.restaurants.save({"title": "Fritos","thumbnailURL": "URL","menu" : [{"name": "Jaetuk bokkum","description": "Rico Jaetuk","price": 5000},{"name": "Kimchi Chigae","description": "Rica sopa Kimchi","price": 6000},{"name": "Samkyeobsal","description": "Maravillosa BBQ coreana","price": 6000}]})
+
+db.foods.find().pretty(); 
+db.foods.find({title:"Comida Asiatica"}).pretty();
+db.restaurants.aggregate([{$match: {title: "Kimchis CR" }},{$set : { avgPrice : { $avg : ["$menu.price"] } } }])
