@@ -12,3 +12,20 @@ db.restaurants.save({"title": "Fritos","thumbnailURL": "URL","menu" : [{"name": 
 db.foods.find().pretty(); 
 db.foods.find({title:"Comida Asiatica"}).pretty();
 db.restaurants.aggregate([{$match: {title: "Kimchis CR" }},{$set : { avgPrice : { $avg : ["$menu.price"] } } }])
+
+
+
+use newt;
+show collections;
+
+db.bike.save({"licensePlate": "17","yearOfAcquisition": "2016","levelOfBattery": 100,"available": "False","pricePerMinute": 1.20,"description": "Red and cute","location": "Plaza la Soledad")
+db.bike.save({"licensePlate": "12","yearOfAcquisition": "2018","levelOfBattery": 37,"available": "True","pricePerMinute": 1.50,"description": "Fast and furious","location": "TEC")
+db.bike.save({"licensePlate": "23","yearOfAcquisition": "2020","levelOfBattery": 97,"available": "False","pricePerMinute": 1.70,"description": "Blue and able for kids","location": "Plaza la Soledad")
+
+db.users.save("username": "ablanco", "wallet": 230, [{ {("licensePlate": "17","yearOfAcquisition": "2016","levelOfBattery": 100,"available": "False","pricePerMinute": 1.20,"description": "Red and cute","location": "Plaza la Soledad"), startingPoint : "Las Ruinas", arrivalPoint : String, timeInMinutes: 19, cost: 20 }])
+db.users.save("username": "ludiaz", "wallet": 475, [{ {("licensePlate": "23","yearOfAcquisition": "2020","levelOfBattery": 97,"available": "False","pricePerMinute": 1.70,"description": "Blue and able for kids","location": "Plaza la Soledad"), startingPoint : "TEC", arrivalPoint : "Caballo Blanco", timeInMinutes: 54, cost: 130 }])
+db.users.save("username": "josVal", "wallet": 0, [])
+
+db.users.find().pretty(); 
+db.users.find({username:"ludiaz"}).pretty()
+db.bike.find("yearOfAcquisition":"2016").count()
