@@ -1,3 +1,5 @@
+## For evaluation purposes, check "binnacleMongo.txt" for database commands and Schemas under "model/PedidosYa" and "model/Newt"
+---
 In this case, we got 4 applications as example and we had to choose 2, then create a database for each application where we can have the required collections to show the content in the examples [Info_here](https://docs.google.com/document/d/1ZmlyL_rWlJnnAshhJODWeffK4sP7Jo9w6vRx5ScWwf0/edit?usp=sharing)
 
 Everything is developed in Typescript using [Moongose_ODM](https://mongoosejs.com/) and here we have the steps to create it in case of other use cases or evaluation purposes. 
@@ -23,8 +25,10 @@ Everything is developed in Typescript using [Moongose_ODM](https://mongoosejs.co
         db.restaurants.save({"title": "Fritos","thumbnailURL": "URL","menu" : [{"name": "Jaetuk bokkum","description": "Rico Jaetuk","price": 5000},{"name": "Kimchi Chigae","description": "Rica sopa Kimchi","price": 6000},{"name": "Samkyeobsal","description": "Maravillosa BBQ coreana","price": 6000}]})
 
 ---
-    For database 2:
-        //Commmands here
+    For NewtDB:
+        db.users.save("username": "ablanco", "wallet": 230, [{ {("licensePlate": "17","yearOfAcquisition": "2016","levelOfBattery": 100,"available": "False","pricePerMinute": 1.20,"description": "Red and cute","location": "Plaza la Soledad"), startingPoint : "Las Ruinas", arrivalPoint : String, timeInMinutes: 19, cost: 20 }])
+        db.users.save("username": "ludiaz", "wallet": 475, [{ {("licensePlate": "23","yearOfAcquisition": "2020","levelOfBattery": 97,"available": "False","pricePerMinute": 1.70,"description": "Blue and able for kids","location": "Plaza la Soledad"), startingPoint : "TEC", arrivalPoint : "Caballo Blanco", timeInMinutes: 54, cost: 130 }])
+        db.users.save("username": "josVal", "wallet": 0, [])
 
 
 4- Create 3 queries as following:
@@ -33,19 +37,16 @@ Everything is developed in Typescript using [Moongose_ODM](https://mongoosejs.co
         For pedidosYaDB:
             db.foods.find().pretty(); 
 
-        For database 2:
-            //Commmands here
+        For NewtDB:
+            db.users.find().pretty(); 
 ___
     b) "WHERE" with ranges:
         For pedidosYaDB:
             db.foods.find({title:"Comida Asiatica"}).pretty();
 
-        For database 2:
-            //Commmands here
+        For NewtDB:
+            db.users.find({username:"ludiaz"}).pretty()
 ___
     c) An aggregarated function (avg, min, max):
         For pedidosYaDB:
             db.restaurants.aggregate([{$match: {title: "Kimchis CR" }},{$set : { avgPrice : { $avg : ["$menu.price"] } } }])
-
-        For database 2:
-            //Commmands here
