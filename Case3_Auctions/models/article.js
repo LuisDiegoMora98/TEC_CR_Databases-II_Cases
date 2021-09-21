@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import Person from './person';
 const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
-  year: {type: Date, default: Date.now},
-  name: {type: String, required: [true, 'Required Name']},
+  year: Number,
+  name: String,
   description: String,
   photoURL: String,
   initialPrice: Number,
-  bidder: {type: {person: {name: String, email: String}, ammountOffered: Number}},
+  maxPrice: Number,
+  initialDate: {type: Date, default: Date.now},
   finalDate: {type: Date, default: Date.now},
   owner : {name: String, email: String},
   active: {type: Boolean, default: true}

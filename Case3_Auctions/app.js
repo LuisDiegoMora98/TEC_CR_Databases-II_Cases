@@ -8,7 +8,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 // Cloud Connection
-const uri = 'mongodb+srv://test:test@cluster0.sb3dx.mongodb.net/Case3?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://test:test@cluster0.sb3dx.mongodb.net/Case3';
 
 const options = {
   useNewUrlParser: true, useCreateIndex: true,  useUnifiedTopology: true

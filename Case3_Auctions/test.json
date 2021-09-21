@@ -1,0 +1,114 @@
+[
+    {
+
+        "photoURL": "https://i.ibb.co/wJQwgTP/unnamed.png",
+        "name": "Smart Band",
+        "year": 2019,
+        "initialDate": "2021-09-20T10:27:56.550Z",
+        "finalDate": "2021-09-25T10:27:56.550Z",
+        "initialPrice": 25000,
+        "maxPrice": 85000,
+        "description": "A smart band that will tell you a lot of things, also enhances style!",
+        "owner": {
+            "name": "Daniel Aguilar",
+            "email": "daniVega@gmail.com"
+        },
+        "active": true
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/5MvSZg5/61bp-VOg-T6i-L-AC-SL1242.jpg",
+        "name": "Pots for plants",
+        "year": 2016,
+        "initialDate": "2021-09-15T10:27:56.550Z",
+        "finalDate": "2021-09-30T10:27:56.550Z",
+        "initialPrice": 15000,
+        "maxPrice": 39000,
+        "description": "Pots with beautiful plants to decorate your home with some nature touch",
+        "owner": {
+            "name": "Mariana Salazar",
+            "email": "marisa@gmail.com"
+        },
+        "active": true
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/RTy2Fnt/Art-culos-modernos-de-limpieza-para-el-hogar.jpg",
+        "name": "Automatic Cleaner Bot",
+        "year": 2021,
+        "initialDate": "2021-09-10T10:27:56.550Z",
+        "finalDate": "2021-09-19T10:27:56.550Z",
+        "initialPrice": 100000,
+        "maxPrice": 250000,
+        "description": "This bot will clean all your home",
+        "owner": {
+            "name": "Jorge Muñoz",
+            "email": "jormu@hotmail.com"
+        },
+        "active": false
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/KWNh4cV/75000107-art-culos-modernos-para-diab-ticos-cuidado-de-la-diabetes-concepto-prueba-monitor-fondo-edu.jpg",
+        "name": "Diabetes Insuline Bumps",
+        "year": 2018,
+        "initialDate": "2021-09-11T10:27:56.550Z",
+        "finalDate": "2021-09-28T10:27:56.550Z",
+        "initialPrice": 75000,
+        "maxPrice": 80000,
+        "description": "Diabetes will be so much easier now with this modern treatment",
+        "owner": {
+            "name": "Michael Dominic",
+            "email": "micadom@gmail.com"
+        },
+        "active": true
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/TqG2nbJ/ap19177611056385-focus-0-0-696-423.jpg",
+        "name": "Old Collection",
+        "year": 1965,
+        "initialDate": "2021-09-20T10:27:56.550Z",
+        "finalDate": "2021-09-25T10:27:56.550Z",
+        "initialPrice": 500000,
+        "maxPrice": 750000,
+        "description": "Old Collection, Certificate is signed by Robert Langdon himself to authenticate its value",
+        "owner": {
+            "name": "Freddy Vega",
+            "email": "fredve@gmail.com"
+        },
+        "active": true
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/gM891k8/shutterstock-514913491.jpg",
+        "name": "Egipcian Cross",
+        "year": 1945,
+        "initialDate": "2021-09-20T10:27:56.550Z",
+        "finalDate": "2021-09-25T10:27:56.550Z",
+        "initialPrice": 300000,
+        "maxPrice": 500000,
+        "description": "A famous egipcian article that ",
+        "owner": {
+            "name": "Roldan Hernandez",
+            "email": "daniVega@gmail.com"
+        },
+        "active": true
+    },
+    {
+        
+        "photoURL": "https://i.ibb.co/x21BMJJ/album-akg599107-2000x1655.jpg",
+        "name": "Egipcian Bracelet",
+        "year": 2019,
+        "initialDate": "2021-09-20T10:27:56.550Z",
+        "finalDate": "2021-09-25T10:27:56.550Z",
+        "initialPrice": 25000,
+        "maxPrice": 85000,
+        "description": "A smart band that will tell you a lot of things, also enhances style!",
+        "owner": {
+            "name": "Daniela Vega",
+            "email": "daniVega@gmail.com"
+        },
+        "active": false
+    }
+]
