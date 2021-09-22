@@ -6,6 +6,7 @@ NoSQL implementation and API REST server manages the requests.
 ## Installation:
 
     1- npm install
+    2- npm install nodemon
 
 ## Usage:
 

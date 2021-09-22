@@ -47,8 +47,9 @@ router.get('/listArticles/:initialDate?/:finalDate?/'
         let query = {};
         //date diff
         if(req.query.initialDate && req.query.finalDate){
-            query.initialDate = {"$gte": req.query.initialDate,
-                                "$lte": req.query.finalDate};
+            //Date must be in "Aug 9, 1995" format
+            query.initialDate = {"$gte": new Date(req.query.initialDate),
+                                "$lte": new Date(req.query.finalDate)};
         }
         //price ranges
         if(req.query.initialPriceRange && req.query.finalPriceRange){
