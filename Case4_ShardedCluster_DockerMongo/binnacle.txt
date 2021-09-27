@@ -166,6 +166,7 @@ docker exec -it register_router1 mongo
 /////////////////////////////////////////////////////////////////
 // 2- Save 2 registers to one replica shard and 3 registers for the other replica.
 // These ones go for morning replica. (0 <= timeCheck < 3)
+use diabetesregister;
 db.dailylogs.save({
         "sugarLevel": 142,
         "date": "Sep 23, 2021 6:00:00",
@@ -235,7 +236,7 @@ use diabetesregister;
 db.dailylogs.find().pretty();
 exit;
 
-docker exec -it late_reg1 mongo
+docker exec -it late_reg2 mongo
 use diabetesregister;
 db.dailylogs.find().pretty();
 exit;
