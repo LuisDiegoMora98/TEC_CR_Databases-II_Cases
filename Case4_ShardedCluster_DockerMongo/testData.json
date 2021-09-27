@@ -1,0 +1,59 @@
+[
+    {
+        "sugarLevel": 142,
+        "date": "Sep 23, 2021 6:00:00",
+        "dayCheck": 0,
+        "food": {
+            "CHO": 3,
+            "proteins": 3,
+            "fats": 1
+        },
+        "insuline": 8
+    },
+    {
+        "sugarLevel": 199,
+        "date": "Sep 23, 2021 9:00:00",
+        "dayCheck": 1,
+        "food": {
+            "CHO": 1,
+            "proteins": 0,
+            "fats": 1
+        },
+        "insuline": 0
+    },
+
+
+    {
+        "sugarLevel": 163,
+        "date": "Sep 23, 2021 12:00:00",
+        "dayCheck": 2,
+        "food": {
+            "CHO": 3,
+            "proteins": 3,
+            "fats": 2
+        },
+        "insuline": 9
+    },
+    {
+        "sugarLevel": 207,
+        "date": "Sep 23, 2021 15:00:00",
+        "dayCheck": 3,
+        "food": {
+            "CHO": 0,
+            "proteins": 2,
+            "fats": 1
+        },
+        "insuline": 0
+    },
+    {
+        "sugarLevel": 68,
+        "date": "Sep 23, 2021 18:00:00",
+        "dayCheck": 4,
+        "food": {
+            "CHO": 4,
+            "proteins": 3,
+            "fats": 1
+        },
+        "insuline": 12
+    }
+]

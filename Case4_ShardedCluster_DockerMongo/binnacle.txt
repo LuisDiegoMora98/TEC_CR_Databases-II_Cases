@@ -1,0 +1,279 @@
+//First pull mongo and create volume and network
+docker pull mongo:latest
+mkdir mongoContainer
+cd mongoContainer
+
+docker volume create vol_cfg_earlyReg
+docker volume create vol_cfg_lateReg
+
+docker network create --driver bridge --subnet 10.0.0.32/28 diabetes_network
+
+// Now create the mongo cluster, including sharding and replication (MOST IMPORTANT ONES). If one server falls, the other one will stand against client requests, each one with same info
+docker run -d --net diabetes_network -v vol_cfg_earlyReg:/data/configdb --ip 10.0.0.34 --name cfg_earlyReg mongo mongod --port 27017 --configsvr --replSet "repcfgregister" --dbpath /data/configdb
+docker run -d --net diabetes_network -v vol_cfg_lateReg:/data/configdb --ip 10.0.0.35 --name cfg_lateReg mongo mongod --port 27017 --configsvr --replSet "repcfgregister" --dbpath /data/configdb
+
+// Let's get into earlyReg configuration server
+docker exec -it cfg_earlyReg mongo
+
+// Initialize replica for config server
+rs.initiate(
+  {
+    _id: "repcfgregister",
+    configsvr: true,
+    members: [
+      { _id : 0, host : "10.0.0.34:27017" },
+      { _id : 1, host : "10.0.0.35:27017" }
+    ]
+  }
+);
+
+// Enable reads for secundary (slave)
+rs.secondaryOk();
+
+docker volume create vol_morning_reg1
+docker volume create vol_morning_reg2
+docker volume create vol_late_reg1
+docker volume create vol_late_reg2
+
+docker run -d --net diabetes_network --ip 10.0.0.36 -v vol_morning_reg1:/data/db --name morning_reg1 mongo mongod --port 27017 --shardsvr --replSet "rep_morning" --dbpath /data/db
+docker run -d --net diabetes_network --ip 10.0.0.37 -v vol_morning_reg2:/data/db --name morning_reg2 mongo mongod --port 27017 --shardsvr --replSet "rep_morning" --dbpath /data/db
+docker run -d --net diabetes_network --ip 10.0.0.38 -v vol_late_reg1:/data/db --name late_reg1 mongo mongod --port 27017 --shardsvr --replSet "rep_late" --dbpath /data/db
+docker run -d --net diabetes_network --ip 10.0.0.39 -v vol_late_reg2:/data/db --name late_reg2 mongo mongod --port 27017 --shardsvr --replSet "rep_late" --dbpath /data/db
+
+// Run the morning shard server and initialize the replica
+docker exec -it morning_reg1 mongo
+rs.initiate(
+  {
+    _id : "rep_morning",
+    members: [
+      { _id : 0, host : "10.0.0.36:27017" },
+      { _id : 1, host : "10.0.0.37:27017" }
+    ]
+  }
+);
+
+// Enable reads for secundary (slave)
+rs.secondaryOk();
+
+// Same run with late shard server and initialize its replica
+docker exec -it late_reg2 mongo
+rs.initiate(
+  {
+    _id : "rep_late",
+    members: [
+      { _id : 0, host : "10.0.0.38:27017" },
+      { _id : 1, host : "10.0.0.39:27017" }
+    ]
+  }
+);
+
+// Enable reads for secundary (slave)
+rs.secondaryOk();
+
+// Set arbiters for each replica
+docker run -d --net diabetes_network --ip 10.0.0.40 --name morning_arb mongo mongod --port 27017 --replSet rep_morning
+docker run -d --net diabetes_network --ip 10.0.0.41 --name late_arb mongo mongod --port 27017 --replSet rep_late
+
+// Connect to any server in the replica and add the arbiter
+docker exec -it morning_reg1 mongo
+rs.addArb("10.0.0.40:27017");
+rs.status();
+
+// Add the other arbiter for the second replica
+docker exec -it late_reg2 mongo
+rs.addArb("10.0.0.41:27017");
+rs.status();
+
+// To run the recommendation is: 
+    1- Sharding servers
+    2- Arbiter servers
+    3- Config servers
+    4- Routers
+docker start morning_reg1
+docker start morning_reg2
+docker start late_reg1
+docker start late_reg2
+
+docker start morning_arb
+docker start late_arb
+
+docker start cfg_earlyReg
+docker start cfg_lateReg
+
+docker start register_router1
+
+// to turn off the recommendation is: 
+    1- Routers
+    2- Sharding servers
+    3- Arbiter servers
+    4- Config servers
+
+docker stop register_router1
+
+docker stop morning_arb
+docker stop late_arb
+
+docker stop morning_reg1
+docker stop morning_reg2
+docker stop late_reg1
+docker stop late_reg2
+
+docker stop cfg_earlyReg
+docker stop cfg_lateReg
+
+// Create a Router
+docker run -d -p 27017:27017 --net diabetes_network --ip 10.0.0.42 --name register_router1 mongo mongos --port 27017 --configdb repcfgregister/10.0.0.34:27017,10.0.0.35:27017
+docker exec -it register_router1 mongo
+
+// Add Shards, only with one server that has replica set. No need to add the other servers with same replica as added server
+sh.addShard("rep_morning/10.0.0.36:27017");
+sh.addShard("rep_late/10.0.0.38:27017");
+
+// Add Tags for Shards
+sh.addShardTag("rep_morning", "morning");
+sh.addShardTag("rep_late", "late");
+sh.status();
+
+// Add Tag Ranges, so registries will be distributed uniformly based on that range. [min, max[
+sh.addTagRange( "diabetesregister.dailylogs",
+                { timeCheck: 0},
+                { timeCheck: 3},
+                "morning"
+              );
+sh.addTagRange( "diabetesregister.dailylogs",
+                { timeCheck: 3},
+                { timeCheck: 6},
+                "late"
+              );
+sh.status();
+
+// Enable Sharding for a database
+sh.enableSharding("diabetesregister");
+
+// Enable Sharding for a collection, 1 means ranged and hashed means hashed with keys shard
+sh.shardCollection( "diabetesregister.dailylogs", { timeCheck : 1 } );
+
+
+
+/////////////////////////////////////////////////////////////////
+////////                Video steps for Case 4          /////////
+/////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////
+// 1- Run Router
+docker exec -it register_router1 mongo
+
+/////////////////////////////////////////////////////////////////
+// 2- Save 2 registers to one replica shard and 3 registers for the other replica.
+// These ones go for morning replica. (0 <= timeCheck < 3)
+use diabetesregister;
+db.dailylogs.save({
+        "sugarLevel": 142,
+        "date": "Sep 23, 2021 6:00:00",
+        "timeCheck": 1,
+        "food": {
+            "CHO": 3,
+            "proteins": 3,
+            "fats": 1
+        },
+        "insuline": 8
+    });
+
+db.dailylogs.save({
+        "sugarLevel": 199,
+        "date": "Sep 23, 2021 9:00:00",
+        "timeCheck": 2,
+        "food": {
+            "CHO": 1,
+            "proteins": 0,
+            "fats": 1
+        },
+        "insuline": 0
+    });
+
+// These ones go for late replica. (3 <= timeCheck < 6)
+db.dailylogs.save({
+        "sugarLevel": 163,
+        "date": "Sep 23, 2021 12:00:00",
+        "timeCheck": 3,
+        "food": {
+            "CHO": 3,
+            "proteins": 3,
+            "fats": 2
+        },
+        "insuline": 9
+    });
+
+db.dailylogs.save({
+        "sugarLevel": 207,
+        "date": "Sep 23, 2021 15:00:00",
+        "timeCheck": 4,
+        "food": {
+            "CHO": 0,
+            "proteins": 2,
+            "fats": 1
+        },
+        "insuline": 0
+    });
+
+db.dailylogs.save({
+        "sugarLevel": 68,
+        "date": "Sep 23, 2021 18:00:00",
+        "timeCheck": 5,
+        "food": {
+            "CHO": 4,
+            "proteins": 3,
+            "fats": 1
+        },
+        "insuline": 12
+    });
+exit;
+
+/////////////////////////////////////////////////////////////////
+// 3- Run one server per replica and check everything is well distributed.
+docker exec -it morning_reg1 mongo
+use diabetesregister;
+db.dailylogs.find().pretty();
+exit;
+
+docker exec -it late_reg2 mongo
+use diabetesregister;
+db.dailylogs.find().pretty();
+exit;
+
+/////////////////////////////////////////////////////////////////
+// 4- Turn off one of the replica server.
+docker stop morning_reg1
+
+/////////////////////////////////////////////////////////////////
+// 5- Run router and check data again.
+docker exec -it register_router1 mongo
+use diabetesregister;
+db.dailylogs.find().pretty();
+exit;
+
+/////////////////////////////////////////////////////////////////
+// 6- Turn off the only one server left in the previous replica from step 4.
+docker stop morning_reg2
+
+/////////////////////////////////////////////////////////////////
+// 7- Run Router and check that we cannot query information anymore.
+docker exec -it register_router1 mongo
+use diabetesregister;
+db.dailylogs.find().pretty();
+exit;
+
+/////////////////////////////////////////////////////////////////
+// 8- Turn on any server from previous replica from steps 4 and 6.
+docker start morning_reg1
+
+/////////////////////////////////////////////////////////////////
+// 9- Run Router and check data.
+docker exec -it register_router1 mongo
+use diabetesregister;
+db.dailylogs.find().pretty();
+exit;
+
+/////////////////////////////////////////////////////////////////
+////////                End of the video steps          /////////
+/////////////////////////////////////////////////////////////////
